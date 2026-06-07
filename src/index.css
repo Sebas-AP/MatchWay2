@@ -1,0 +1,347 @@
+/* ── Uber & Uber Eats Premium Light/Dark Palette ──────────────── */
+:root {
+  /* Uber Essentials */
+  --uber-black:     #000000;
+  --uber-white:     #FFFFFF;
+  
+  /* Grays (Uber System Grays) */
+  --gray-50:        #F6F6F6; /* Fondo principal / Inputs */
+  --gray-100:       #EEEEEE; /* Bordes sutiles / Dividers */
+  --gray-200:       #E2E2E2;
+  --gray-500:       #AFAFAF; /* Placeholders */
+  --gray-600:       #6B6B6B; /* Textos secundarios */
+  --gray-700:       #333333;
+  
+  /* Accent Colors (Uber Eats Brand) */
+  --uber-green:     #06C167; /* El verde clásico de Uber Eats (Éxito, CTAs) */
+  --uber-green-dk:  #05944F;
+  --uber-green-lt:  #E6F9F0;
+  --uber-blue:      #1F93FF; /* Enlaces / Info */
+  --uber-danger:    #E23737; /* Cancelar / Nope */
+  
+  /* Elevation & System */
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.04);
+  --shadow-md:     0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg:     0 8px 30px rgba(0,0,0,0.12);
+  
+  /* Uber Border Radius (Muy angular pero suave en tarjetas) */
+  --radius-sm:     4px;
+  --radius-md:     8px;
+  --radius-lg:     12px;
+  --radius-xl:     16px;
+  --radius-pill:   9999px;
+}
+
+/* ── Reset & Base (Foco en legibilidad) ─────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--uber-white);
+  color: var(--uber-black);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App Shell (Header Uber Estilo Limpio) ───────────────────────── */
+.app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+.app-header {
+  background: var(--uber-white);
+  padding: 0 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--gray-100);
+  z-index: 100;
+}
+
+.header-logo { display: flex; align-items: center; gap: 8px; }
+.header-logo-icon { font-size: 24px; color: var(--uber-black); }
+.header-logo-name { font-weight: 700; font-size: 22px; letter-spacing: -0.5px; }
+.logo-match { color: var(--uber-black); }
+.logo-way   { color: var(--uber-green); margin-left: 1px; }
+.header-logo-sub { font-size: 11px; color: var(--gray-600); font-weight: 500; }
+
+/* Navegación por Tabs tipo Filtros de Uber Eats */
+.tab-nav { display: flex; gap: 8px; }
+.tab-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border: none; border-radius: var(--radius-pill);
+  background: var(--gray-50); color: var(--uber-black);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.1s ease;
+}
+.tab-btn:hover  { background: var(--gray-100); }
+.tab-btn.active { background: var(--uber-black); color: var(--uber-white); }
+.tab-icon { font-size: 16px; }
+
+@media (max-width: 480px) { 
+  .tab-label { display: none; } 
+  .tab-icon { font-size: 18px; } 
+  .tab-btn { padding: 10px; border-radius: 50%; } 
+}
+
+.app-main { flex: 1; overflow: hidden; position: relative; }
+
+/* ── Botones nativos de Uber (Bloques sólidos y planos) ─────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 24px; border: none; border-radius: var(--radius-md);
+  background: var(--uber-black); color: var(--uber-white);
+  font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: background .1s ease, transform .1s ease;
+}
+.btn-primary:hover  { background: var(--gray-700); }
+.btn-primary:active { transform: scale(.98); }
+.btn-primary:disabled { background: var(--gray-200); color: var(--gray-500); cursor: not-allowed; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 12px 20px; border: none; border-radius: var(--radius-md);
+  background: var(--gray-50); color: var(--uber-black);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background .1s ease;
+}
+.btn-ghost:hover { background: var(--gray-100); }
+
+/* Spinner */
+.spinner {
+  width: 28px; height: 28px; border: 3px solid var(--gray-100);
+  border-top-color: var(--uber-black); border-radius: 50%;
+  animation: spin .6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Swipe V2 (Tarjetas de Comida/Locales Estilo Uber) ──────────── */
+.swipe-v2 {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  background: var(--uber-white);
+  overflow: hidden;
+}
+
+.swipe-v2-header { padding: 16px 20px 8px; display: flex; align-items: center; justify-content: space-between; }
+.swipe-v2-title { font-size: 20px; font-weight: 700; color: var(--uber-black); letter-spacing: -0.3px; }
+.swipe-v2-pills { display: flex; gap: 6px; }
+.v2-pill { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: var(--radius-pill); }
+.v2-pill-left  { background: var(--gray-50); color: var(--gray-600); }
+.v2-pill-right { background: var(--uber-green-lt); color: var(--uber-green-dk); }
+
+.swipe-v2-stage { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0 16px; min-height: 0; }
+.swipe-cards-inner { position: relative; width: 100%; max-width: 390px; height: 95%; }
+
+/* Estructura limpia de la Tarjeta */
+.card-v2 {
+  position: absolute; inset: 0;
+  border-radius: var(--radius-xl); overflow: hidden;
+  background: var(--uber-white);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-100);
+  user-select: none; touch-action: none;
+  z-index: 10;
+}
+
+.card-v2-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.card-v2-emoji-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--gray-50); }
+.card-v2-big-emoji { font-size: 90px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1)); }
+
+/* Degradado elegante de Uber para que lea el texto blanco */
+.card-v2-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 75%, rgba(0,0,0,0.9) 100%);
+  pointer-events: none;
+}
+
+/* Indicadores de Swipe Minimalistas */
+.card-v2-label {
+  position: absolute; top: 24px; padding: 6px 14px; border-radius: var(--radius-sm);
+  font-size: 18px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; border: 3px solid; pointer-events: none;
+}
+.card-v2-like-label { left: 20px; color: var(--uber-green); border-color: var(--uber-green); transform: rotate(-10deg); }
+.card-v2-nope-label { right: 20px; color: var(--uber-danger); border-color: var(--uber-danger); transform: rotate(10deg); }
+
+/* Badges Flotantes */
+.card-v2-rating {
+  position: absolute; top: 16px; right: 16px;
+  padding: 6px 10px; border-radius: var(--radius-pill);
+  background: var(--uber-white); color: var(--uber-black); font-size: 12px; font-weight: 700;
+  box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 4px;
+}
+.card-v2-community {
+  position: absolute; top: 16px; left: 16px;
+  padding: 6px 10px; border-radius: var(--radius-pill);
+  background: var(--uber-black); color: var(--uber-white); font-size: 11px; font-weight: 600;
+}
+
+/* Información de la tienda abajo */
+.card-v2-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; pointer-events: none; z-index: 2; }
+.card-v2-category {
+  display: inline-block; padding: 4px 8px; border-radius: var(--radius-sm);
+  background: var(--uber-green); color: var(--uber-white); font-size: 11px; font-weight: 700; margin-bottom: 8px;
+}
+.card-v2-name { font-size: 26px; font-weight: 700; color: var(--uber-white); line-height: 1.2; margin-bottom: 4px; }
+.card-v2-desc { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.4; margin-bottom: 4px; }
+.card-v2-address { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+/* Botones de acción inferiores (Estilo redondo táctil de Uber) */
+.swipe-v2-actions { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 16px 0; }
+.btn-action { display: flex; align-items: center; justify-content: center; border: none; border-radius: 50%; cursor: pointer; box-shadow: var(--shadow-md); transition: transform 0.1s; }
+.btn-action:active { transform: scale(0.92); }
+
+.btn-action-x { width: 56px; height: 56px; background: var(--gray-50); color: var(--uber-black); border: 1px solid var(--gray-200); }
+.btn-action-x:hover { background: var(--gray-100); color: var(--uber-danger); }
+
+.btn-action-heart { width: 60px; height: 60px; background: var(--uber-black); color: var(--uber-white); }
+.btn-action-heart:hover { background: var(--gray-700); }
+
+.swipe-v2-hint { text-align: center; font-size: 12px; color: var(--gray-600); padding-bottom: 12px; }
+
+/* ── Result V2 (Resumen de pedidos/historial Uber Eats) ────────── */
+.result-v2 { height: 100%; overflow-y: auto; background: var(--uber-white); padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; }
+.result-v2-title { font-size: 24px; font-weight: 700; color: var(--uber-black); letter-spacing: -0.5px; }
+.result-v2-sub { font-size: 14px; color: var(--gray-600); }
+
+.result-v2-scroll-area { margin: 0 -20px; }
+.result-v2-scroll { display: flex; gap: 12px; padding: 4px 20px 12px; overflow-x: auto; }
+
+/* Tarjetas horizontales tipo "Pedir de nuevo" */
+.result-v2-card {
+  flex-shrink: 0; width: 140px; background: var(--uber-white); border-radius: var(--radius-lg);
+  overflow: hidden; border: 1px solid var(--gray-100); transition: box-shadow 0.15s;
+}
+.result-v2-card:hover { box-shadow: var(--shadow-sm); }
+.result-v2-card-hero { height: 90px; background: var(--gray-50); display: flex; align-items: center; justify-content: center; }
+.result-v2-card-img { width: 100%; height: 100%; object-fit: cover; }
+.result-v2-card-info { padding: 10px; }
+.result-v2-card-name { font-size: 13px; font-weight: 600; color: var(--uber-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.result-v2-card-cat { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+
+/* Caja de Ruta Narrativa (Estilo recibo o resumen de viaje Uber) ── */
+.result-v2-route { background: var(--gray-50); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--gray-100); }
+.result-v2-route-label { font-size: 12px; font-weight: 700; color: var(--uber-black); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.result-v2-route-text { font-size: 15px; color: var(--gray-700); line-height: 1.6; }
+
+/* ── Maps Section ────────────────────────────────── */
+.maps-section { position: relative; height: 100%; }
+.map-container { flex: 1; position: relative; height: 100%; }
+
+/* Controles de mapa flotantes tipo la app de Uber */
+.map-controls { position: absolute; top: 16px; left: 16px; z-index: 10; display: flex; flex-direction: column; gap: 12px; }
+.radius-card { background: var(--uber-white); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-md); min-width: 220px; border: 1px solid var(--gray-100); }
+.radius-label { font-size: 12px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; margin-bottom: 6px; }
+.radius-value { font-size: 24px; font-weight: 700; color: var(--uber-black); }
+.radius-slider { width: 100%; margin-top: 8px; accent-color: var(--uber-black); cursor: pointer; }
+
+/* Botón flotante para abrir chat/agente (El botón redondo clásico de Uber) */
+.map-agent-toggle { position: absolute; bottom: 24px; right: 24px; z-index: 10; }
+.btn-agent-toggle {
+  display: flex; align-items: center; gap: 8px; padding: 16px 24px; border: none; border-radius: var(--radius-pill);
+  background: var(--uber-black); color: var(--uber-white); font-size: 15px; font-weight: 600;
+  box-shadow: var(--shadow-lg); transition: all 0.1s;
+}
+.btn-agent-toggle:hover { background: var(--gray-700); }
+
+/* Panel inferior deslizable (BottomSheet nativo de Uber) */
+.map-panel-overlay { position: absolute; inset: 0; z-index: 20; background: rgba(0,0,0,0.3); display: flex; align-items: flex-end; }
+.map-panel {
+  width: 100%; max-height: 80vh; background: var(--uber-white); border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  display: flex; flex-direction: column; box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+.panel-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--gray-200); margin: 12px auto 8px; }
+
+/* ── Chat Section (Mensajes de soporte/Socio repartidor) ────────── */
+.chat-section { height: 100%; display: flex; background: var(--gray-50); }
+
+.chat-sidebar {
+  width: 260px; background: var(--uber-white); border-right: 1px solid var(--gray-100);
+  display: flex; flex-direction: column;
+}
+.sidebar-header { padding: 20px; border-bottom: 1px solid var(--gray-100); }
+.sidebar-logo { font-weight: 700; font-size: 18px; color: var(--uber-black); }
+.sidebar-logo span { color: var(--uber-green); }
+
+.topic-btn {
+  width: 100%; padding: 12px 16px; border: none; background: transparent;
+  color: var(--gray-700); font-size: 14px; text-align: left; cursor: pointer;
+  font-weight: 500; display: flex; align-items: center; gap: 10px;
+}
+.topic-btn:hover { background: var(--gray-50); color: var(--uber-black); }
+
+/* Burbujas de Chat Limpias */
+.chat-main { flex: 1; display: flex; flex-direction: column; background: var(--gray-50); }
+.chat-topbar { padding: 14px 20px; background: var(--uber-white); border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; gap: 12px; }
+.chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.chat-topbar-name { font-size: 16px; font-weight: 600; color: var(--uber-black); }
+.chat-topbar-status { font-size: 12px; color: var(--uber-green-dk); font-weight: 500; }
+
+.chat-messages { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.msg-row { display: flex; gap: 10px; max-width: 80%; }
+.msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-row.assistant { align-self: flex-start; }
+
+/* El truco de Uber: Burbujas super limpias y esquinas redondeadas modernas */
+.msg-bubble { padding: 12px 16px; border-radius: var(--radius-xl); font-size: 14px; line-height: 1.5; }
+.msg-row.user .msg-bubble { background: var(--uber-blue); color: var(--uber-white); border-bottom-right-radius: 4px; }
+.msg-row.assistant .msg-bubble { background: var(--uber-white); color: var(--uber-black); border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100); }
+
+/* Input de Chat estilo Uber Eats Search Bar */
+.chat-input-area { padding: 16px 20px; background: var(--uber-white); border-top: 1px solid var(--gray-100); }
+.chat-textarea {
+  flex: 1; padding: 12px 16px; border: 1px solid var(--gray-200); border-radius: var(--radius-pill);
+  background: var(--gray-50); font-size: 15px; color: var(--uber-black); outline: none; resize: none;
+}
+.chat-textarea:focus { border-color: var(--uber-black); background: var(--uber-white); }
+.btn-send {
+  width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--uber-black);
+  color: var(--uber-white); cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.btn-send:hover { background: var(--gray-700); }
+
+/* ── Add Business Section (Formularios estilo Uber Portal) ────── */
+.add-section { padding: 32px 20px; background: var(--gray-50); display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.add-title { font-size: 26px; font-weight: 700; color: var(--uber-black); letter-spacing: -0.5px; }
+.add-form { width: 100%; max-width: 520px; background: var(--uber-white); border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--gray-100); box-shadow: var(--shadow-md); display: flex; flex-direction: column; gap: 18px; }
+
+.field-label { font-size: 13px; font-weight: 600; color: var(--uber-black); margin-bottom: 4px; }
+.field-input, .field-select, .field-textarea {
+  padding: 12px 16px; border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  background: var(--gray-50); font-size: 15px; color: var(--uber-black); width: 100%; outline: none;
+}
+.field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--uber-black); background: var(--uber-white); }
+
+/* Selector de Precios ($ $$ $$$) Estilo Uber */
+.price-options { display: flex; gap: 8px; }
+.price-opt {
+  flex: 1; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--gray-200);
+  background: var(--gray-50); font-size: 14px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.1s;
+}
+.price-opt:hover { background: var(--gray-100); }
+.price-opt.selected { background: var(--uber-black); color: var(--uber-white); border-color: var(--uber-black); }
+
+.btn-submit { width: 100%; padding: 16px; font-size: 16px; font-weight: 600; border-radius: var(--radius-md); margin-top: 8px; }
+
+/* ── Dark Mode Nativo de Uber (Totalmente Nocturno) ───────────── */
+.dark, .dark .chat-main, .dark .chat-messages, .dark .swipe-v2, .dark .result-v2, .dark .add-section {
+  background: #121212 !important;
+  color: #FFFFFF !important;
+}
+.dark .app-header, .dark .chat-topbar, .dark .chat-input-area, .dark .chat-sidebar, .dark .radius-card, .dark .map-panel, .dark .add-form, .dark .result-v2-card {
+  background: #1F1F1F !important;
+  border-color: #2D2D2D !important;
+}
+.dark .tab-btn { background: #2D2D2D; color: #FFFFFF; }
+.dark .tab-btn.active { background: #FFFFFF; color: #121212; }
+.dark .msg-row.assistant .msg-bubble { background: #2D2D2D !important; color: #FFFFFF !important; border-color: #3D3D3D !important; }
+.dark .chat-textarea, .dark .field-input, .dark .field-select, .dark .field-textarea, .dark .price-opt {
+  background: #2D2D2D !important;
+  border-color: #3D3D3D !important;
+  color: #FFFFFF !important;
+}
+.dark .btn-primary { background: #FFFFFF !important; color: #121212 !important; }
+.dark .btn-primary:hover { background: #E2E2E2 !important; }
+.dark .card-v2 { background: #1F1F1F; border-color: #2D2D2D; }
+.dark .result-v2-route { background: #1F1F1F; border-color: #2D2D2D; }
+.dark .header-logo-name, .dark .swipe-v2-title, .dark .panel-title, .dark .add-title { color: #FFFFFF !important; }
