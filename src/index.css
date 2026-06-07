@@ -227,6 +227,7 @@ body {
 /* ── Maps Section ────────────────────────────────── */
 .maps-section { position: relative; height: 100%; }
 .map-container { flex: 1; position: relative; height: 100%; }
+.map-div { width: 100%; height: 100%; }
 
 /* Controles de mapa flotantes tipo la app de Uber */
 .map-controls { position: absolute; top: 16px; left: 16px; z-index: 10; display: flex; flex-direction: column; gap: 12px; }
@@ -345,3 +346,133 @@ body {
 .dark .card-v2 { background: #1F1F1F; border-color: #2D2D2D; }
 .dark .result-v2-route { background: #1F1F1F; border-color: #2D2D2D; }
 .dark .header-logo-name, .dark .swipe-v2-title, .dark .panel-title, .dark .add-title { color: #FFFFFF !important; }
+
+/* ── Chat: fixes de layout ───────────────────────────────────────── */
+.chat-messages       { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.chat-input-row      { display: flex; align-items: flex-end; gap: 8px; }
+.chat-topbar-status  { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--uber-green-dk); font-weight: 500; }
+.status-dot          { width: 7px; height: 7px; border-radius: 50%; background: var(--uber-green); flex-shrink: 0; }
+.darkmode-btn        { margin-left: auto; background: none; border: none; cursor: pointer; font-size: 18px; padding: 6px 8px; border-radius: var(--radius-md); line-height: 1; transition: background .1s; }
+.darkmode-btn:hover  { background: var(--gray-50); }
+.msg-time            { font-size: 10px; color: var(--gray-500); margin-top: 3px; padding: 0 4px; }
+.msg-row.user .msg-time { text-align: right; }
+.msg-avatar          { width: 30px; height: 30px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+
+/* Typing indicator */
+.typing-row    { display: flex; align-items: flex-end; gap: 10px; }
+.typing-bubble { display: flex; align-items: center; gap: 5px; padding: 12px 16px; background: var(--uber-white); border-radius: var(--radius-xl); border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100); }
+.typing-dot    { width: 7px; height: 7px; border-radius: 50%; background: var(--gray-500); animation: typingBounce .8s infinite; }
+.typing-dot:nth-child(2) { animation-delay: .15s; }
+.typing-dot:nth-child(3) { animation-delay: .30s; }
+@keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+/* Error en chat */
+.msg-error-row    { display: flex; align-items: flex-start; gap: 8px; padding: 10px 16px; background: #FEF2F2; border-radius: var(--radius-lg); border: 1px solid #FECACA; }
+.msg-error-icon   { font-size: 16px; flex-shrink: 0; }
+.msg-error-label  { font-size: 13px; font-weight: 600; color: #DC2626; margin-bottom: 4px; }
+.msg-error-detail { font-size: 11px; color: #991B1B; font-family: monospace; word-break: break-all; }
+
+/* Mensajes con formato (rutas / bold) */
+.route-place     { display: flex; gap: 6px; align-items: baseline; padding: 4px 0; cursor: pointer; }
+.route-place:hover { opacity: .85; }
+.route-place-num { font-weight: 700; color: var(--uber-green-dk); min-width: 20px; flex-shrink: 0; }
+
+/* Sidebar */
+.sidebar-sub           { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+.sidebar-topics        { flex: 1; overflow-y: auto; padding: 12px 8px; display: flex; flex-direction: column; gap: 1px; }
+.sidebar-section-title { font-size: 11px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: .05em; padding: 10px 8px 4px; }
+.sidebar-footer        { padding: 12px 8px; border-top: 1px solid var(--gray-100); }
+.topic-icon            { font-size: 15px; flex-shrink: 0; }
+.apikey-toggle         { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: var(--radius-md); cursor: pointer; font-size: 12px; color: var(--gray-700); }
+.apikey-input-wrap     { display: flex; gap: 6px; margin-top: 8px; }
+.apikey-input          { flex: 1; padding: 7px 10px; border: 1px solid var(--gray-200); border-radius: var(--radius-md); font-size: 12px; outline: none; background: var(--gray-50); }
+.apikey-input:focus    { border-color: var(--uber-black); background: var(--uber-white); }
+.apikey-save           { padding: 7px 12px; background: var(--uber-black); color: var(--uber-white); border: none; border-radius: var(--radius-md); font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ── Mapa: panel inferior ────────────────────────────────────────── */
+.panel-header    { display: flex; align-items: center; justify-content: space-between; padding: 0 16px 12px; }
+.panel-title     { font-size: 16px; font-weight: 700; color: var(--uber-black); }
+.btn-close       { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--gray-600); padding: 4px 8px; border-radius: var(--radius-md); line-height: 1; }
+.btn-close:hover { background: var(--gray-50); }
+.panel-messages  { flex: 1; overflow-y: auto; padding: 4px 16px 12px; display: flex; flex-direction: column; gap: 10px; }
+.panel-input-row { display: flex; align-items: flex-end; gap: 8px; padding: 10px 16px; border-top: 1px solid var(--gray-100); }
+
+/* Leyenda del mapa */
+.map-loading   { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px; color: var(--gray-600); font-size: 14px; }
+.map-legend    { background: var(--uber-white); border-radius: var(--radius-lg); padding: 12px 16px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-100); }
+.legend-title  { font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; margin-bottom: 8px; }
+.legend-item   { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gray-700); margin-bottom: 4px; }
+.legend-dot    { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.radius-range  { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+.radius-unit   { font-size: 14px; color: var(--gray-600); }
+
+/* InfoWindow de Google Maps */
+.info-popup      { font-family: 'Inter', system-ui, sans-serif; min-width: 140px; }
+.info-popup-emoji { font-size: 26px; text-align: center; margin-bottom: 4px; }
+.info-popup-name { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 2px; }
+.info-popup-cat  { font-size: 12px; color: #666; margin-bottom: 4px; }
+.info-popup-meta { font-size: 12px; color: #444; line-height: 1.4; }
+
+/* ── Agregar negocio: fixes ──────────────────────────────────────── */
+.add-section { overflow-y: auto; }
+.add-header  { text-align: center; }
+.add-sub     { font-size: 14px; color: var(--gray-600); margin-top: 4px; }
+.add-success { background: var(--uber-green-lt); border: 1px solid var(--uber-green); color: var(--uber-green-dk); padding: 12px 16px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; max-width: 520px; width: 100%; }
+
+.field-group   { display: flex; flex-direction: column; gap: 4px; }
+.field-hint    { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+.field-error   { font-size: 12px; color: var(--uber-danger); font-weight: 500; margin-top: 2px; }
+.required      { color: var(--uber-danger); }
+.field-input.error, .field-select.error { border-color: var(--uber-danger); }
+
+/* Fix textarea usando fuente del sistema (no monospace) */
+.field-textarea { font-family: inherit; }
+
+/* Rating slider */
+.rating-row     { display: flex; flex-direction: column; gap: 6px; }
+.rating-display { display: flex; align-items: center; gap: 6px; }
+.rating-value   { font-size: 16px; font-weight: 700; color: var(--uber-black); }
+.rating-slider  { width: 100%; accent-color: var(--uber-black); cursor: pointer; }
+.rating-range   { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500); }
+
+/* Zona de imagen */
+.image-drop        { border: 2px dashed var(--gray-200); border-radius: var(--radius-lg); padding: 28px 16px; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; position: relative; overflow: hidden; }
+.image-drop:hover  { border-color: var(--uber-black); background: var(--gray-50); }
+.image-drop.has-image { padding: 0; height: 180px; border-style: solid; border-color: var(--gray-200); }
+.image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
+.image-icon        { font-size: 32px; line-height: 1; }
+.image-hint        { font-size: 14px; font-weight: 500; color: var(--uber-black); }
+.image-hint-sub    { font-size: 12px; color: var(--gray-500); }
+.image-preview     { width: 100%; height: 100%; object-fit: cover; display: block; }
+.image-overlay     { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px; opacity: 0; transition: opacity .15s; }
+.image-drop:hover .image-overlay { opacity: 1; }
+.image-name        { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+/* Select de categoría */
+.select-wrap       { display: flex; flex-direction: column; gap: 6px; }
+.cat-preview-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: var(--radius-pill); color: white; font-size: 12px; font-weight: 600; align-self: flex-start; }
+
+/* Tarjetas de la comunidad */
+.custom-list       { width: 100%; max-width: 520px; }
+.custom-list-title { font-size: 16px; font-weight: 700; color: var(--uber-black); margin-bottom: 12px; }
+.custom-grid       { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.custom-card       { background: var(--uber-white); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--gray-100); box-shadow: var(--shadow-sm); }
+.custom-card-hero  { height: 100px; display: flex; align-items: center; justify-content: center; }
+.custom-card-body  { padding: 12px; }
+.custom-card-cat   { font-size: 11px; font-weight: 600; margin-bottom: 2px; }
+.custom-card-name  { font-size: 14px; font-weight: 700; color: var(--uber-black); margin-bottom: 4px; }
+.custom-card-meta  { font-size: 12px; color: var(--gray-600); margin-bottom: 2px; }
+.custom-card-addr  { font-size: 11px; color: var(--gray-500); }
+
+/* ── Swipe: detalles ─────────────────────────────────────────────── */
+.card-v2-ghost  { position: absolute; inset: 0; border-radius: var(--radius-xl); background: var(--gray-50); border: 1px solid var(--gray-100); overflow: hidden; }
+.target-reached { animation: pulseGreen .4s ease; }
+@keyframes pulseGreen { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+/* Result screen */
+.result-v2-loading { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--gray-600); font-size: 14px; }
+.result-v2-error   { color: var(--uber-danger); font-size: 13px; text-align: center; }
+.result-v2-cta     { display: flex; }
+.result-v2-btn     { width: 100%; }
+.result-v2-reset   { width: 100%; justify-content: center; }
+.result-v2-empty   { text-align: center; color: var(--gray-600); padding: 40px 0; font-size: 15px; }

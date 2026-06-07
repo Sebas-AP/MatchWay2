@@ -88,8 +88,10 @@ export default function MapsSection({ extraBusinesses = [] }) {
   const [messages, setMessages]   = useState([
     { role: 'assistant', content: '¡Hola! Soy tu guía de Durango 🌵 ¿Qué tipo de lugar buscas hoy?', isInitial: true }
   ])
-  const [input, setInput]   = useState('')
+  const [input, setInput]     = useState('')
   const [loading, setLoading] = useState(false)
+  const [savedKey, setSavedKey] = useState('')
+  const [apiKey, setApiKey]   = useState('')
 
   useEffect(() => {
     loadMapsScript()
@@ -196,15 +198,20 @@ export default function MapsSection({ extraBusinesses = [] }) {
       const history = [...messages, userMsg]
         .filter(m => !m.isInitial)
         .map(({ role, content }) => ({ role, content }))
-      const reply = await chatWithAgent(history)
+      const reply = await chatWithAgent(history, savedKey || undefined)
       setMessages(p => [...p, { role: 'assistant', content: reply }])
       allBiz.forEach(b => {
         if (reply.toLowerCase().includes(b.name.toLowerCase())) {
           highlightBusiness(b.name)
         }
       })
-    } catch {
-      setMessages(p => [...p, { role: 'assistant', content: 'Lo siento, hubo un error. Intenta de nuevo 🙏' }])
+    } catch (e) {
+      console.error('MapsSection chatWithAgent error:', e)
+      const detail = e?.message?.includes('402') ? 'Sin créditos en la API key. Usa una API key personalizada abajo.' :
+                     e?.message?.includes('401') ? 'API key inválida. Usa una API key personalizada abajo.' :
+                     e?.message?.includes('429') ? 'Límite de peticiones alcanzado. Espera un momento.' :
+                     'Error al conectar con el agente. Intenta de nuevo 🙏'
+      setMessages(p => [...p, { role: 'assistant', content: detail }])
     }
     setLoading(false)
   }
@@ -312,6 +319,27 @@ export default function MapsSection({ extraBusinesses = [] }) {
                 style={{ minHeight: 40 }}
               />
               <button className="btn-send" onClick={send} disabled={!input.trim() || loading}>➤</button>
+            </div>
+            <div style={{ padding: '6px 12px 10px', borderTop: '1px solid #EDE0CC' }}>
+              <details>
+                <summary style={{ fontSize: 11, color: '#B08060', cursor: 'pointer' }}>🔑 API Key personalizada</summary>
+                <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
+                  <input
+                    type="password"
+                    placeholder="sk-or-v1-..."
+                    value={apiKey}
+                    onChange={e => setApiKey(e.target.value)}
+                    style={{ flex: 1, fontSize: 11, padding: '4px 8px', border: '1px solid #E0CDB0', borderRadius: 6 }}
+                  />
+                  <button
+                    onClick={() => setSavedKey(apiKey)}
+                    style={{ fontSize: 11, padding: '4px 10px', background: '#C4622D', color: 'white', border: 'none', borderRadius: 6, cursor: 'pointer' }}
+                  >
+                    OK
+                  </button>
+                </div>
+                {savedKey && <div style={{ fontSize: 10, color: '#6A8761', marginTop: 4 }}>✓ API key activa</div>}
+              </details>
             </div>
           </div>
         </div>

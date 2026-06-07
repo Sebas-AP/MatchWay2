@@ -1,4 +1,4 @@
-const OPENROUTER_KEY = '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'
+const OPENROUTER_KEY = import.meta.env.VITE_OPENROUTER_KEY || ''
 const MODEL = 'google/gemini-2.5-flash'
 const BASE_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
